@@ -1,28 +1,28 @@
-
+const User=require("../Models/user.js");
 
 const Login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const getStudent = await Student.findOne({ email: email });
+    const getUser = await User.findOne({ email: email });
 
-    if (!getStudent) {
-      return res.status(404).send("Student not Found");
+    if (!getUser) {
+      return res.status(404).send("User not Found");
     }
 
     const isPasswordCorrect = await bcrypt.compare(
       password,
-      getStudent.password,
+      getUser.password,
     );
     if (!isPasswordCorrect) {
       return res.status(401).send("Wrong Password");
     }
 
     const token = jwt.sign({ email: email }, secretKey, { expiresIn: 200 });
-    res.cookie("studentLoginToken", token, { maxAge: 40000 });
+    res.cookie("userLoginToken", token, { maxAge: 40000 });
     return res.status(200).json({message:"Student Login successfully"});
   } catch (err) {
-    console.log("Error occured in student Login", err);
+    console.log("Error occured in user Login", err);
     res.status(500).send("Server Error");
   }
 };
@@ -30,16 +30,16 @@ const Login = async (req, res) => {
 const forgetPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const student =await Student.findOne({ email: email });
+    const user =await User.findOne({ email: email });
 
-    if(!student){
+    if(!user){
      return res.status(404).json({"message" :"user not found"})
     }
     const resetPasswordToken = crypto.randomBytes(Number(process.env.SALT_ROUND)).toString("hex");
     const resetPasswordTime = Date.now() + 10 * 60 * 1000;
-    student.resetPasswordToken = resetPasswordToken;
-    student.resetPasswordTime = resetPasswordTime;
-   await student.save();
+    user.resetPasswordToken = resetPasswordToken;
+    user.resetPasswordTime = resetPasswordTime;
+   await user.save();
     const resetLink = `http://localhost:3000/student/resetPassword/${resetPasswordToken}`;
       
     
