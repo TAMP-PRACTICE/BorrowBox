@@ -1,6 +1,6 @@
 const User=require("../Models/user.js");
 
-const Login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
