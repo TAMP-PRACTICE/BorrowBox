@@ -18,8 +18,8 @@ const login = async (req, res) => {
       return res.status(401).send("Wrong Password");
     }
 
-    const token = jwt.sign({ email: email }, secretKey, { expiresIn: 200 });
-    res.cookie("userLoginToken", token, { maxAge: 40000 });
+    const token = jwt.sign({ email: email }, secretKey);
+    res.cookie("userLoginToken", token);
     return res.status(200).json({message:"User Login successfully"});
   } catch (err) {
     console.log("Error occured in user Login", err);
