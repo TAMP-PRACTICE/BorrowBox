@@ -1,3 +1,4 @@
+
 const User = require('../Models/user.js')
 
 const userRegisteration = async (req,res) =>{
@@ -25,3 +26,4 @@ const userRegisteration = async (req,res) =>{
     }
 }
 
+module.exports = userRegisteration;

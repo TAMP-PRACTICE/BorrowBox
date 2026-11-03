@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
-
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt')
 const adminRoute = require('./routes/admin.js')
 const userRoute = require('./routes/user.js')
 const ownerRoute = require('./routes/owner.js')
