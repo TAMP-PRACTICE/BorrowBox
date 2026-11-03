@@ -68,6 +68,10 @@ const forgetPassword = async (req, res) => {
   }
 };
 
+// const logout = async(req,res)={
+//     const token = req.cookies()
+// }
+
 
 const resetPassword = async(req,res)=>{
     try{
