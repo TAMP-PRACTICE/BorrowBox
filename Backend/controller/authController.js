@@ -20,7 +20,7 @@ const Login = async (req, res) => {
 
     const token = jwt.sign({ email: email }, secretKey, { expiresIn: 200 });
     res.cookie("userLoginToken", token, { maxAge: 40000 });
-    return res.status(200).json({message:"Student Login successfully"});
+    return res.status(200).json({message:"User Login successfully"});
   } catch (err) {
     console.log("Error occured in user Login", err);
     res.status(500).send("Server Error");
@@ -40,7 +40,7 @@ const forgetPassword = async (req, res) => {
     user.resetPasswordToken = resetPasswordToken;
     user.resetPasswordTime = resetPasswordTime;
    await user.save();
-    const resetLink = `http://localhost:3000/student/resetPassword/${resetPasswordToken}`;
+    const resetLink = `http://localhost:3000/user/resetPassword/${resetPasswordToken}`;
       
     
       const info = await transporter.sendMail({
@@ -73,17 +73,17 @@ const resetPassword = async(req,res)=>{
     try{
     const {token} = req.params;
     const {newPassword} = req.body;
-    const student =await Student.findOne({
+    const user =await User.findOne({
         resetPasswordToken  : token,
         resetPasswordTime :{ $gt : Date.now()}
     })
-  if (!student) {
+  if (!UserActivation) {
     return res.status(400).json({ message: "Invalid or expired token" });
   }else{
-    student.password = await bcrypt.hash(newPassword, Number(process.env.SALT_ROUND));
-    student.resetPasswordToken = undefined;
-    student.resetPasswordTime = undefined;
-    await student.save();
+    user.password = await bcrypt.hash(newPassword, Number(process.env.SALT_ROUND));
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTime = undefined;
+    await user.save();
      
   }
 } catch (error) {
