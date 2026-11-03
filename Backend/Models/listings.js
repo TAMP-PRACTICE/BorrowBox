@@ -30,7 +30,8 @@ const listingSchema=mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["booked","available"]
+        enum:["booked","available"],
+        default:"available"
     },
     owner:{
         type:mongoose.Schema.Types.ObjectId,
