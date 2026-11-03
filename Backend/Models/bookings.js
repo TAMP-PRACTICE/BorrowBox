@@ -24,14 +24,17 @@ const bookingSchema=mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["accepted","rejected","pending"]
+        enum:["accepted","rejected","pending"],
+        default:"pending"
     },
      completionStatus:{
         type:String,
+        default:"ongoing",
         enum:["completed","ongoing"]
     },
     itemStatus:{
         type:String,
+        default:"not-returned",
         enum:["returned","not-returned"]
     }
 
