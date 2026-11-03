@@ -24,8 +24,9 @@ const userRegisteration = async (req,res) =>{
             contact,
             borrowHistory
         })
+        await newUser.save();
+        res.status(201).json({"msg": "User registered successfully"});
     }
-
      catch (error) {
         res.status(401).json({"msg":"Issue in Adding Admin"});
     }
